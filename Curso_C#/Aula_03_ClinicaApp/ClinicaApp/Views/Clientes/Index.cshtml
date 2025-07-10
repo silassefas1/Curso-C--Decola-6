@@ -1,0 +1,79 @@
+﻿<h1>Pagina de Clientes</h1>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div style="text-align: right; margin-bottom: 20px;">
+    <a class="btn btn-success btn-lg" style="font-size: 1.3rem; padding: 12px 32px;" asp-area="" asp-controller="Clientes" asp-action="Create">Cadastrar novo cliente</a>
+</div>
+
+@model IEnumerable<Cliente>
+
+<table class="table table-striped">
+ <thead>
+  <tr style="text-align: center;">
+   <th style="text-align: center;">@Html.DisplayNameFor(model => model.ClienteID)</th>
+   <th style="text-align: center;">@Html.DisplayNameFor(model => model.Nome)</th>
+   <th style="text-align: center;">@Html.DisplayNameFor(model => model.DataNascimento)</th>
+   <th style="text-align: center;">@Html.DisplayNameFor(model => model.Salario)</th>
+   <th style="text-align: center;">Ações</th>
+  </tr>
+ </thead>
+ <tbody>
+  @foreach(var cliente in Model){
+  <tr style="text-align: center;">
+   <td>@cliente.ClienteID</td>
+   <td>@cliente.Nome</td>
+   <td>@cliente.DataNascimento</td>
+   <td>@cliente.Salario</td>
+   <td>
+                <div style="display: flex; justify-content: center; gap: 8px;">
+                    <a class="btn btn-warning" asp-controller="Clientes" asp-action="Edit" asp-route-id="@cliente.ClienteID">Editar</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-cliente-id="@cliente.ClienteID" data-cliente-nome="@cliente.Nome">Deletar</button>
+                </div>
+            </td>
+  </tr>
+  }
+ </tbody>
+
+
+</table>
+
+@* Modal de confirmação de exclusão *@
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja deletar o cliente <span id="clienteNome"></span>?
+      </div>
+      <div class="modal-footer">
+        <form id="deleteForm" method="post">
+            <input type="hidden" name="id" id="clienteId" />
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var clienteId = button.getAttribute('data-cliente-id');
+            var clienteNome = button.getAttribute('data-cliente-nome');
+            document.getElementById('clienteNome').textContent = clienteNome;
+            document.getElementById('clienteId').value = clienteId;
+            document.getElementById('deleteForm').action = '/Clientes/Delete/' + clienteId;
+        });
+    </script>
+}
+ 

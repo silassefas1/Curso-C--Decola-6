@@ -1,0 +1,27 @@
+﻿<h1>Pagina de Delete</h1>
+
+@model ClinicaApp.Models.Cliente
+
+@{
+    ViewData["Title"] = "Editar Cliente";
+}
+<h4>@Model.Nome</h4>
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ClienteID" />
+    <label asp-for="Nome"></label>
+    <input asp-for="Nome" disabled required placeholder="Digite o seu nome">
+    
+
+    <label asp-for="DataNascimento"></label>
+    <input asp-for="DataNascimento" disabled>
+    
+
+    <label asp-for="Salario"></label>
+    <input asp-for="Salario" name="Salario" disabled>
+    
+
+    <input type="submit" class="btn btn-success" value="Atualizar" />
+
+</form>

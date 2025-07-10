@@ -1,0 +1,33 @@
+﻿<h1>Pagina de Edição de clientes</h1>
+
+<h1>O codigo chegou aqui porque eu crie a View do edit na pasta cliente e especifiquei que queria essa view edit no URL 
+	e a creie no Controller e criei a pasta</h1>
+
+<h1>Para a view aparecer na pagina ela tem que esta no controller</h1>
+
+
+@model ClinicaApp.Models.Cliente
+
+@{
+	ViewData["Title"] = "Editar Cliente";
+}
+<h4>@Model.Nome</h4>
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit">
+	<input type="hidden" asp-for="ClienteID" />
+	<label asp-for="Nome"></label>
+	<input asp-for="Nome" required placeholder="Digite o seu nome">
+    
+
+	<label asp-for="DataNascimento"></label>
+	<input asp-for="DataNascimento">
+    
+
+	<label asp-for="Salario"></label>
+	<input asp-for="Salario" name="Salario">
+    
+
+	<input type="submit" class="btn btn-success" value="Atualizar" />
+
+</form>
